@@ -43,6 +43,9 @@ const route = useRoute()
 const router = useRouter()
 const restaurantName = route.params.restaurantName
 const restaurant = restaurants.find((rest) => rest.name === restaurantName)
+useHead({
+  title: restaurant ? restaurantName : '404',
+})
 </script>
 
 <style scoped>
