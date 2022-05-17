@@ -5,7 +5,9 @@
   </div>
   <div v-else class="row" :class="{ 'bg-darker': index % 2 === 0 }">
     <h4 class="header rank">{{ rank }}</h4>
-    <a :href="`/restaurants/${name}`" class="header link">{{ name }}</a>
+    <NuxtLink :href="`/restaurants/${name}`" class="header link">{{
+      name
+    }}</NuxtLink>
   </div>
 </template>
 

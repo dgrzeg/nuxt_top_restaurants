@@ -1,22 +1,38 @@
 <template>
   <div>
-    <div class="restaurant-container">
-      <div class="image-container">
-        <img :src="restaurant.imageUrl" :alt="restaurant.name" />
-      </div>
-      <div class="info-container">
-        <h1>{{ restaurant.name }}</h1>
-        <div class="stats-container">
-          <h5>Revenue (in billions)</h5>
-          <p>${{ restaurant.revenue }}</p>
+    <NuxtLayout name="restad" v-if="restaurant">
+      <div class="restaurant-container">
+        <div class="image-container">
+          <img :src="restaurant.imageUrl" :alt="restaurant.name" />
         </div>
-        <div class="stats-container">
-          <h5>Number of Stores</h5>
-          <p>{{ restaurant.numberOfStores }}</p>
+        <div class="info-container">
+          <h1>{{ restaurant.name }}</h1>
+          <div class="stats-container">
+            <h5>Revenue (in billions)</h5>
+            <p>${{ restaurant.revenue }}</p>
+          </div>
+          <div class="stats-container">
+            <h5>Number of Stores</h5>
+            <p>{{ restaurant.numberOfStores }}</p>
+          </div>
+          <p class="content">{{ restaurant.content }}</p>
         </div>
-        <p class="content">{{ restaurant.content }}</p>
       </div>
-    </div>
+    </NuxtLayout>
+    <NuxtLayout name="error" v-else class="restaurant-not-found">
+      <template #header>
+        <h1>Restaurant not found!</h1>
+      </template>
+
+      <template #redirect>
+        <button
+          class="btn btn-primary btn-large"
+          @click="$router.push('/restaurants')"
+        >
+          Go Back
+        </button>
+      </template>
+    </NuxtLayout>
   </div>
 </template>
 
@@ -27,10 +43,6 @@ const route = useRoute()
 const router = useRouter()
 const restaurantName = route.params.restaurantName
 const restaurant = restaurants.find((rest) => rest.name === restaurantName)
-
-if (!restaurant) {
-  router.push({ name: '404' })
-}
 </script>
 
 <style scoped>
@@ -79,5 +91,9 @@ if (!restaurant) {
 .content {
   font-size: 1.5rem;
   margin-top: 4rem;
+}
+.sadface {
+  margin: 2rem;
+  width: 10rem;
 }
 </style>
